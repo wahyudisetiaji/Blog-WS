@@ -4,18 +4,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+var mongoose = require('mongoose')
 require('dotenv').config();
 
-var mongoose = require('mongoose')
-var db = mongoose.connection
-mongoose.connect(`mongodb://${process.env.MLAB_USER}:${process.env.MLAB_PASS}@ds125862.mlab.com:25862/blog-ws`, { useNewUrlParser: true })
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('we are connected mlab!');
-});
+const DB_MLAB = {
+  development: process.env.DB_DEVELOPMENT,
+  test: process.env.DB_TESTING
+}
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var articleRouter = require('./routes/article');
 
 var app = express();
 
@@ -29,8 +28,22 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+if(!process.env.NODE_ENV){
+  process.env.NODE_ENV = 'development'
+}
+
+console.log('======>', process.env.NODE_ENV);
+var db = mongoose.connection
+mongoose.connect(DB_MLAB[process.env.NODE_ENV], { useNewUrlParser: true })
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('we are connected mlab!');
+});
+
+app.use(cors())
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/articles', articleRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
