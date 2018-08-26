@@ -17,12 +17,6 @@
       label="Article"
       required
     ></v-textarea>
-     <v-text-field
-      v-model="author"
-      :rules="authorRules"
-      label="Author"
-      required
-    ></v-text-field>
     <v-text-field
       v-model="tags"
       :rules="tagsRules"
@@ -53,10 +47,6 @@
       article: '',
       articleRules: [
         v => !!v || 'Article is required',
-      ],
-      author: '',
-      authorRules: [
-        v => !!v || 'Author is required',
       ],
       tags: '',
       tagsRules: [
@@ -115,6 +105,7 @@
               .then((result) => {
                 swal(`Your article has been updated!`)
                 this.$router.push('/myarticle')
+                this.$router.go()
               })
               .catch((err) => {
                 swal(err.message)

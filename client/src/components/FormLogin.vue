@@ -58,10 +58,8 @@
           .then((result) => {
             localStorage.setItem('token', result.data.data.token)
             swal(`Hai ${result.data.data.name}, Your has been login! You can create article now.`)
-            //  setInterval(function(){
-            //   window.location='http://localhost:8080/'
-            // }, 2000)
             this.$router.push('/')
+            this.$router.go()
           })
           .catch((err) => {
             swal(err.message)

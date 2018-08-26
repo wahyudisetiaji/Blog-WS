@@ -10,7 +10,6 @@ class ArticleController {
       articleTitle: req.body.articleTitle,
       image: req.body.image,
       article: req.body.article,
-      author: req.body.author,
       date: req.body.date,
       tags: req.body.tags.split(","),
       userId: decode.id
@@ -47,6 +46,7 @@ class ArticleController {
     let token = req.headers.token
     let decode = jwt.verify(token, process.env.JWT_SECRET_KEY)
     Article.find({userId: decode.id})
+      .populate("userId")
       .then(articles => {
         res.status(200).json({
           message: "data my article",
@@ -62,6 +62,7 @@ class ArticleController {
 
   static getArticle(req, res) {
     Article.find({})
+      .populate("userId")
       .then(articles => {
         res.status(200).json({
           message: "data all article",
@@ -78,6 +79,7 @@ class ArticleController {
   static getOneArticle(req, res) {
     let id = req.params.id
     Article.find({_id: id})
+      .populate("userId")
       .then(articles => {
         res.status(200).json({
           message: "data article",
@@ -100,7 +102,6 @@ class ArticleController {
           articleTitle: req.body.articleTitle,
           image: req.body.image,
           article: req.body.article,
-          author: req.body.author,
           tags: req.body.tags.split(",")
         }
       }
@@ -116,7 +117,62 @@ class ArticleController {
           message: err.message
         });
       });
-    
+  }
+
+  static commentArticle(req, res) {
+    let token = req.headers.token
+    let decode = jwt.verify(token, process.env.JWT_SECRET_KEY)
+    let id = req.params.id;
+    Article.updateOne(
+      {_id: id},
+      {
+        $push: {
+          comments: { 
+            comment: req.body.comment,
+            date: new Date(),
+            name: decode.name
+          }
+        }
+      }
+    )
+    .then(result => {
+      res.status(200).json({
+        message: "comment successfully update",
+        result
+      });
+    })
+    .catch(err => {
+      res.status(400).json({
+        message: err.message
+      });
+    });
+  }
+
+  static deleteComment(req, res) {
+    let idArticle = req.params.id;
+    console.log(idArticle);
+    console.log(req.body.idComment);
+    Article.updateOne(
+      {_id: idArticle},
+      {
+        $pull: {
+          comments: { 
+            _id: req.body.idComment
+          }
+        }
+      }
+    )
+    .then(result => {
+      res.status(200).json({
+        message: "comment successfully deleted",
+        result
+      });
+    })
+    .catch(err => {
+      res.status(400).json({
+        message: err.message
+      });
+    });
   }
 }
 

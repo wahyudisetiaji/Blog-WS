@@ -1,7 +1,6 @@
 <template>
     <div class="navbar">
         <v-toolbar>
-        <v-toolbar-side-icon></v-toolbar-side-icon>
         <v-toolbar-title>BLOG<img class="logo-ws" alt="ws logo" src="../assets/logo-ws.png"></v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down button-navbar">
@@ -26,9 +25,8 @@ export default {
         logout () {
             localStorage.clear()
             swal(`Thanks for join in Blog-WS, See you next time!`)
-            setInterval(function(){
-              window.location='http://localhost:8080/'
-            }, 2000)
+            this.$router.push('/')
+            this.$router.go()
         }
     },
     created(){

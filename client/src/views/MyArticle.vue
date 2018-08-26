@@ -18,21 +18,6 @@
   </div>
 </template>
 
-<script>
-import ListMyArticle from '@/components/ListMyArticle.vue'
-import FormUpdateArticle from '@/components/FormUpdateArticle.vue'
-import FormCreateArticle from '@/components/FormCreateArticle.vue'
-
-export default {
-    name: 'listmyarticle',
-    components: {
-        ListMyArticle,
-        FormUpdateArticle,
-        FormCreateArticle
-    }
-}
-</script>
-
 <style>
 .button{
   color: #293D52;

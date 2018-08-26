@@ -14,10 +14,6 @@ var articleSchema = new Schema({
         type: String,
         required: [true, 'article is required']
     },
-    author: {
-        type: String,
-        required: [true, 'article is required']
-    },
     date: {
         type: Date,
         default: Date.now,
@@ -26,10 +22,7 @@ var articleSchema = new Schema({
     comments: [{
         comment: String,
         date: Date,
-        userId: {
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-        }
+        name: String,
     }],
     tags: [{
         type: String,

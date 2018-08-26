@@ -12,13 +12,16 @@
               v-bind:src="article.image"
               height="200px"
             ></v-card-media>
-            <v-card-title primary-title>
-              <h4 class="articleTitle">{{article.articleTitle}}</h4>
-            </v-card-title>
-            <v-card-actions>
-              <v-btn flat color="orange">Share</v-btn>
-              <v-btn flat :to="`/articles/detail/${article._id}`" color="orange">Explore</v-btn>
-            </v-card-actions>
+            <v-card-text primary-title>
+              <h4 class="articleTitle subheading text-sm-left font-weight-bold">{{article.articleTitle}}</h4><br>  
+              <p class="author caption text-sm-left font-italic font-weight-thin">Posted by {{article.userId.name}}</p>
+              <p class="date caption text-sm-left font-italic font-weight-light">{{ moment(article.date).format("dddd, MMMM Do YYYY, h:mm") }} WIB</p>
+            </v-card-text>
+            <v-card-text class="explore-btn">
+              <router-link class="explore" :to="`/articles/detail/${article._id}`">
+                <v-btn flat color="orange">Explore</v-btn>
+              </router-link>
+            </v-card-text>
           </v-card>
         </v-flex>
        </v-layout>
@@ -27,12 +30,18 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 
 export default {
      data () {
       return {
         articles: []
       }
+    },
+    methods: {
+      moment: function (date) {
+        return moment(date);
+      },
     },
     mounted() {
         let token = localStorage.getItem('token')
@@ -60,6 +69,13 @@ export default {
 
 .articleTitle {
   text-align: left;
+}
+
+.explore-btn {
+  padding: 0px;
+}
+.explore {
+  text-decoration-line: none;
 }
 </style>
 

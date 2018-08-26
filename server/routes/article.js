@@ -13,12 +13,14 @@ router.post('/upload',
       message: 'Your file is successfully uploaded',
       link: req.file.cloudStoragePublicUrl
     })
-  })
+})
+router.get('/', ArticleController.getArticle)
+router.get('/article/:id', ArticleController.getOneArticle)
 router.get('/myarticle', isLogin, ArticleController.myArticle)
-router.get('/', isLogin, ArticleController.getArticle)
-router.get('/article/:id', isLogin, ArticleController.getOneArticle)
 router.post('/create', isLogin, ArticleController.createArticle)
 router.delete('/:id', isLogin, ArticleController.deleteArticle)
 router.put('/:id', isLogin, ArticleController.updateArticle)
+router.put('/comment/:id', isLogin, ArticleController.commentArticle)
+router.put('/comment/delete/:id', isLogin, ArticleController.deleteComment)
 
 module.exports = router;

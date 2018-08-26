@@ -80,7 +80,7 @@
           })
           .then((result) => {
             swal(`Hai ${result.data.data.name}, Your account has been registered! You must login now.`)
-            this.$router.push('/login')
+            this.$router.go()
           })
           .catch((err) => {
             swal(err.message)

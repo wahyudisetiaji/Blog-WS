@@ -11,18 +11,12 @@
       <label for="image">Image</label>
       <input label="" type="file" id="image" v-on:change="getImage($event)">
     </v-layout><br>
-    <v-textarea
+    <v-textarea rows="10"
       v-model="article"
       :rules="articleRules"
       label="Article"
       required
     ></v-textarea>
-     <v-text-field
-      v-model="author"
-      :rules="authorRules"
-      label="Author"
-      required
-    ></v-text-field>
     <v-text-field
       v-model="tags"
       :rules="tagsRules"
@@ -53,10 +47,6 @@
       article: '',
       articleRules: [
         v => !!v || 'Article is required',
-      ],
-      author: '',
-      authorRules: [
-        v => !!v || 'Author is required',
       ],
       tags: '',
       tagsRules: [
@@ -94,7 +84,9 @@
               })
               .then((result) => {
                 swal(`Your article has been created!`)
-                this.$refs.form.reset()
+                  this.$router.push('/myarticle')
+                  this.$router.go()
+                  this.$refs.form.reset()
               })
               .catch((err) => {
                 swal(err.message)

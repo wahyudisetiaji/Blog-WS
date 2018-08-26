@@ -8,11 +8,10 @@
         >
             <template slot="items" slot-scope="props">
             <td>{{ props.item.articleTitle }}</td>
-            <td>{{ props.item.date }}</td>
-            <td>{{ props.item.author }}</td>
+            <td>{{ moment(props.item.date).format("dddd, MMMM Do YYYY, h:mm") }} WIB</td>
             <td>
                <a class="item-link">
-                   <router-link :to="`/myarticle/update/${props.item._id}`">Edit</router-link>
+                   <router-link class="edit" :to="`/myarticle/update/${props.item._id}`">Edit</router-link>
                </a> ||
                <a class="item-link" @click="deleteArticle(props.item._id)" href="#">Delete</a>
             </td>
@@ -24,6 +23,7 @@
 <script>
   import axios from 'axios'
   import swal from 'sweetalert'
+  import moment from 'moment'
   export default {
     data () {
       return {
@@ -35,13 +35,15 @@
             value: 'name'
           },
           { text: 'Created At', align: 'center', value: 'date' },
-          { text: 'Author', align: 'center', value: 'author' },
           { text: 'Actions', sortable: false, align: 'center', value: 'actions' },
         ],
         articles: []
       }
     },
     methods: {
+        moment: function (date) {
+            return moment(date);
+        },
         deleteArticle (id) {
             let token = localStorage.getItem('token')
             axios({
@@ -53,10 +55,8 @@
             })
             .then((result) => {
                 swal('task successfully deleted')
-                // setInterval(function(){
-                //     window.location='http://localhost:8080/myarticle'
-                // }, 2000)
-                 this.$router.push('/article')
+                 this.$router.push('/myarticle')
+                 this.$router.go()
             })
             .catch((err) => {
                 
@@ -77,4 +77,15 @@
         .catch((err) => {});
     }
   }
-</script>
+</script> 
+
+<style>
+.edit {
+    text-decoration-line: none;
+}
+
+.item-link {
+    text-decoration-line: none;
+}
+</style>
+
