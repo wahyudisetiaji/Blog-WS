@@ -54,12 +54,12 @@
             email: this.email,
             password: this.password
           }
-          axios.post('http://localhost:3000/users/login', data)
+          axios.post(`${api}/users/login`, data)
           .then((result) => {
             localStorage.setItem('token', result.data.data.token)
             swal(`Hai ${result.data.data.name}, Your has been login! You can create article now.`)
-            this.$router.push('/')
-            this.$router.go()
+            // this.$router.push('/')
+            // this.$router.go()
           })
           .catch((err) => {
             swal(err.message)
