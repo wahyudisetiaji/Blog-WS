@@ -48,7 +48,7 @@
             let token = localStorage.getItem('token')
             axios({
                 method: 'DELETE',
-                url: `http://localhost:3000/articles/${id}`,
+                url: `${api}/articles/${id}`,
                 headers: {
                     token
                 }
@@ -56,7 +56,7 @@
             .then((result) => {
                 swal('task successfully deleted')
                  this.$router.push('/myarticle')
-                 this.$router.go()
+                //  this.$router.go()
             })
             .catch((err) => {
                 
@@ -67,7 +67,7 @@
         let token = localStorage.getItem('token')
         axios({
             method: 'GET',
-            url: 'http://localhost:3000/articles/myarticle',
+            url: `${api}/articles/myarticle`,
             headers: {
                 token
             }})

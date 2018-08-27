@@ -65,7 +65,7 @@
         let token = localStorage.getItem('token')
         axios({
             method: 'GET',
-            url: `http://localhost:3000/articles/article/${id}`,
+            url: `${api}/articles/article/${id}`,
             headers: {
                 token
             }})
@@ -86,11 +86,11 @@
         if (this.$refs.form.validate()) {
           let formData = new FormData()
           formData.append("image", this.image)
-          axios.post('http://localhost:3000/articles/upload', formData)
+          axios.post(`${api}/articles/upload`, formData)
           .then((image) => {
               axios({
                 method: 'PUT',
-                url: `http://localhost:3000/articles/${id}`,
+                url: `${api}/articles/${id}`,
                 data: {
                   articleTitle: this.articleTitle,
                   image: image.data.link,
@@ -105,7 +105,7 @@
               .then((result) => {
                 swal(`Your article has been updated!`)
                 this.$router.push('/myarticle')
-                this.$router.go()
+                // this.$router.go()
               })
               .catch((err) => {
                 swal(err.message)

@@ -68,7 +68,7 @@
           }
           axios({
             method: 'POST',
-            url: 'http://localhost:3000/users/register',
+            url: `${api}/users/register`,
             data: {
               name: this.name,
               email: this.email,
@@ -80,7 +80,7 @@
           })
           .then((result) => {
             swal(`Hai ${result.data.data.name}, Your account has been registered! You must login now.`)
-            this.$router.go()
+            // this.$router.go()
           })
           .catch((err) => {
             swal(err.message)

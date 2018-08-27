@@ -26,7 +26,7 @@ export default {
             localStorage.clear()
             swal(`Thanks for join in Blog-WS, See you next time!`)
             this.$router.push('/')
-            this.$router.go()
+            // this.$router.go()
         }
     },
     created(){

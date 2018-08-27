@@ -64,11 +64,11 @@
           let formData = new FormData()
 
           formData.append("image", this.image)
-          axios.post('http://localhost:3000/articles/upload', formData)
+          axios.post(`${api}/articles/upload`, formData)
           .then((image) => {
               axios({
                   method: 'POST',
-                  url: 'http://localhost:3000/articles/create',
+                  url: `${api}/articles/create`,
                   headers: {
                       token
                   },
@@ -84,7 +84,7 @@
               .then((result) => {
                 swal(`Your article has been created!`)
                   this.$router.push('/myarticle')
-                  this.$router.go()
+                  // this.$router.go()
                   this.$refs.form.reset()
               })
               .catch((err) => {

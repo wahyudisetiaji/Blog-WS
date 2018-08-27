@@ -55,7 +55,7 @@ export default {
             let idArticle = this.$route.params.id
             axios({
                 method: 'PUT',
-                url: `http://localhost:3000/articles/comment/delete/${idArticle}`,
+                url: `${api}/articles/comment/delete/${idArticle}`,
                 headers: {
                     token
                 },
@@ -66,7 +66,7 @@ export default {
             .then((result) => {
                 swal(`Your comment has been deleted!`)
                 this.comment = ''
-                this.$router.go()
+                // this.$router.go()
             })
             .catch((err) => {
             swal(err.message)
@@ -77,7 +77,7 @@ export default {
             let token = localStorage.getItem('token')
             axios({
                 method: 'PUT',
-                url: `http://localhost:3000/articles/comment/${id}`,
+                url: `${api}/articles/comment/${id}`,
                 headers: {
                     token
                 },
@@ -88,7 +88,7 @@ export default {
             .then((result) => {
                 swal(`Your comment has been created!`)
                 this.comment = ''
-                this.$router.go()
+                // this.$router.go()
             })
             .catch((err) => {
             swal(err.message)
@@ -101,7 +101,7 @@ export default {
             let id = this.$route.params.id
             axios({
                 method: 'GET',
-                url: `http://localhost:3000/articles/article/${id}`,
+                url: `${api}/articles/article/${id}`,
             })
             .then((result) => {
                 this.comments = result.data.articles[0].comments
@@ -115,7 +115,7 @@ export default {
             let token = localStorage.getItem('token')
             axios({
                 method: 'GET',
-                url: `http://localhost:3000/users`,
+                url: `${api}/users`,
                 headers: {
                     token
                 }
