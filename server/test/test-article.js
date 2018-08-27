@@ -14,35 +14,43 @@ describe('Article', function(){
         done()
     })
 
-    it('POST success, as expected', function(done) { 
+    it('GET success, as expected get all article', function(done) { 
         chai.request('http://localhost:3000')
-        .post('/users/signUp')
-        .send({
-            name: "Wahyudi",
-            email: "wahyudi@mail.com",
-            password: "123"
+        .get('/articles')
+        .end(function (err, res) {
+            expect(res).to.have.status(200)
+            expect(res).to.be.a('object')
+            done()
         })
-        .end(function(err, res) {   
-            console.log(res.body);
-          expect(res).to.have.status(201);
-          expect(res).to.have.a('object')
-          done();                              
-        });
-      });
+    });
 
-      it('POST success, as expected', function(done) {
-          chai.request('http://localhost:3000')
-          .post('/users/signIn')
-          .send({
-              email: "wahyudi@mail.com",
-              password: "123"
-          })
-          .end(function(err, res) {
-              console.log(res.body);
-              expect(res).to.have.status(200);
-              expect(res).to.have.a('object')
-              done()
-          })
+    it('GET success, as expected get one article', function(done) { 
+        chai.request('http://localhost:3000')
+        .get(`/articles/article/5b7bc623ea9f72f8feeb2497`)
+        .end(function (err, res) {
+            expect(res).to.have.status(200)
+            expect(res).to.be.a('object')
+            done()
+        })
+    });
 
-      })
+    it('DELETE success, as expected to my article', function(done) { 
+        chai.request('http://localhost:3000')
+        .get(`/articles/5b7bc623ea9f72f8feeb2497`)
+        .end(function (err, res) {
+            expect(res).to.have.status(200)
+            expect(res).to.be.a('object')
+            done()
+        })
+    });
+
+    it('PUT success, as expected to my article', function(done) { 
+        chai.request('http://localhost:3000')
+        .get(`/articles/5b7bc623ea9f72f8feeb2497`)
+        .end(function (err, res) {
+            expect(res).to.have.status(200)
+            expect(res).to.be.a('object')
+            done()
+        })
+    });
 })

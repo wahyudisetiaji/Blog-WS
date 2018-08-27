@@ -23,7 +23,7 @@
                 <h4 class="articleTitle subheading text-sm-left font-weight-bold">{{comment.comment}}</h4><br>
                 <p class="date caption text-sm-left font-italic font-weight-light">{{comment.name}} - {{ moment(comment.date).format("dddd, MMMM Do YYYY, h:mm") }} WIB</p>
                 <v-flex offset-xs10>  
-                     <v-btn  v-if="token" class="button-delete" @click="deleteComment(comment._id)" color="success">Delete</v-btn>
+                     <v-btn   v-if="viewer == comment.name || viewer == posted" class="button-delete" @click="deleteComment(comment._id)" color="success">Delete</v-btn>
                 </v-flex>
                 </div>
                 </v-card-text>
@@ -42,18 +42,10 @@ import moment from 'moment'
 export default {
     data () {
       return {
-        headers: [
-          {
-            text: 'Comment',
-            align: 'center',
-            sortable: false,
-            value: 'name'
-          },
-          { text: 'Date', align: 'center', value: 'date' },
-          { text: 'Author', align: 'center', value: 'author' },
-        ],
         comments: [],
         comment: '',
+        posted: '',
+        viewer: '',
         token: localStorage.getItem("token")
       }
     },
@@ -105,22 +97,40 @@ export default {
         moment: function (date) {
             return moment(date);
         },
+        getOneArticle() {
+            let id = this.$route.params.id
+            axios({
+                method: 'GET',
+                url: `http://localhost:3000/articles/article/${id}`,
+            })
+            .then((result) => {
+                this.comments = result.data.articles[0].comments
+                this.posted = result.data.articles[0].userId.name
+            })
+            .catch((err) => {
+            swal(err.message)
+            })
+        },
+        getOneUser() {
+            let token = localStorage.getItem('token')
+            axios({
+                method: 'GET',
+                url: `http://localhost:3000/users`,
+                headers: {
+                    token
+                }
+            })
+            .then((result) => {
+                this.viewer = result.data.data.name
+            })
+            .catch((err) => {
+            })
+        }
     },
     created() {
-        let id = this.$route.params.id
-        axios({
-            method: 'GET',
-            url: `http://localhost:3000/articles/article/${id}`,
-        })
-        .then((result) => {
-            this.comments = result.data.articles[0].comments 
-            console.log(result.data.articles[0]);
-                       
-        })
-        .catch((err) => {
-          swal(err.message)
-        });
-      }
+        this.getOneArticle()
+        this.getOneUser()
+    }
 }
 </script>
 

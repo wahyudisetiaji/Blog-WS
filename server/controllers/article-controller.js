@@ -150,8 +150,6 @@ class ArticleController {
 
   static deleteComment(req, res) {
     let idArticle = req.params.id;
-    console.log(idArticle);
-    console.log(req.body.idComment);
     Article.updateOne(
       {_id: idArticle},
       {

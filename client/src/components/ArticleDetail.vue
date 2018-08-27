@@ -53,6 +53,7 @@ export default {
             }})
         .then((result) => {
             this.article = result.data.articles[0]
+            
         })
         .catch((err) => {
           swal(err.message)

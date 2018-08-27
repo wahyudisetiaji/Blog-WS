@@ -56,8 +56,7 @@
 
     methods: {
       getImage(link) {
-          this.image = link.target.files[0],
-          console.log(this.image)  
+          this.image = link.target.files[0] 
       },
       submit () {
         if (this.$refs.form.validate()) {
@@ -91,7 +90,6 @@
               .catch((err) => {
                 swal(err.message)
               });
-            
           }).catch((err) => {
               swal(err.message)
           });

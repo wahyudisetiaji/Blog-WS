@@ -53,8 +53,6 @@ export default {
             }})
         .then((result) => {
             this.articles = result.data.articles
-            console.log(this.articles);
-            
         })
         .catch((err) => {});
     }

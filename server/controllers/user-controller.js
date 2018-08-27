@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const bcryptjs = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken')
 
 class UserController {
   static registerUser(req, res) {
@@ -83,10 +83,12 @@ class UserController {
   }
 
   static findUser(req, res) {
-    User.find({})
+    let token = req.headers.token
+    let decode = jwt.verify(token, process.env.JWT_SECRET_KEY)
+    User.findOne({_id: decode.id})
       .then(data => {
         res.status(200).json({
-          message: "data all users",
+          message: "data users",
           data
         });
       })
